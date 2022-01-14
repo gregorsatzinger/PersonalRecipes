@@ -14,54 +14,70 @@
         android:background="@color/primary"
         android:padding="@dimen/distance_medium">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/distance_small"
-            app:startIconDrawable="@drawable/ic_baseline_search"
-            app:startIconContentDescription="@string/search_recipes"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            app:endIconMode="clear_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:hint="@string/search_recipes"
-            android:importantForAutofill="no"
-            android:inputType="textFilter">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_light"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+        <include layout="@layout/seperator" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/drpOrderBy"
-            android:paddingBottom="@dimen/distance_small"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/sortOrder">
-
-            <AutoCompleteTextView
-                android:id="@+id/txvOrderBy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary_light"
-                android:inputType="none"
-                tools:ignore="LabelFor" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/sortOrder"
+            android:textColor="@color/primary_light"/>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="match_parent"
+                android:id="@+id/orderByGroup"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleLine="true">
+                app:singleLine="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_baseline_arrow_drop_down"
+                    app:chipIconVisible="true"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:text="@string/rating"/>
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_baseline_arrow_drop_up"
+                    app:chipIconVisible="true"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:text="@string/rating"/>
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_baseline_arrow_downward"
+                    app:chipIconVisible="true"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:text="@string/title"/>
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipIcon="@drawable/ic_baseline_arrow_upward"
+                    app:chipIconVisible="true"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:text="@string/title"/>
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <include layout="@layout/seperator" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/categories"
+            android:textColor="@color/primary_light"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/categoryGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
@@ -85,19 +101,22 @@
                     android:text="Whatever"/>
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
+
+        <include layout="@layout/seperator" />
+
     </LinearLayout>
 
 
-    <!--This is the backdrop's content with a BottomSheetBehaviour applied to it-->
+    <!-- Content -->
     <LinearLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:behavior_peekHeight="56dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        app:layout_behavior=".ui.utils.GestureLockedBottomSheetBehavior">
 
-        <!--This is the backdrop's header with a title and icon-->
+        <!-- Header of Content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,25 +124,39 @@
             android:clickable="true"
             android:background="@drawable/ic_rounded_header"
             android:padding="@dimen/distance_medium"
-            android:elevation="4dp"
             android:focusable="true">
 
-            <TextView
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtSearch"
+                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="0 items(s)"/>
+                android:paddingEnd="@dimen/distance_medium"
+                app:startIconDrawable="@drawable/ic_baseline_search"
+                app:startIconContentDescription="@string/search_recipes"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                app:endIconMode="clear_text"
+                android:hint="@string/search_recipes"
+                android:importantForAutofill="no"
+                android:inputType="textFilter">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary_light"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:id="@+id/filterIcon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_baseline_filter_list"
                 android:layout_gravity="end"/>
 
         </LinearLayout>
 
-        <!--And finally this is the body of the backdrop's content. You can add here whatever you need inside a view group (LinearLayout, RelativeLayout, SwipeRefreshLayout, ConstraintLayout, etc.)-->
+        <!-- Content Body -->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swiperefresh"
             android:layout_width="match_parent"

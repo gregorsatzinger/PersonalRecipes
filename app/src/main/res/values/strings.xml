@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">PersonalRecipes</string>
+    <string name="app_name">Personal Recipes</string>
     <string name="add">Add</string>
-    <string name="search_recipes">Search Recipes</string>
+    <string name="search_recipes">Search</string>
     <string name="sortOrder">Order By</string>
+    <string name="categories">Categories</string>
+    <string name="rating">Rating</string>
+    <string name="title">Title</string>
 </resources>

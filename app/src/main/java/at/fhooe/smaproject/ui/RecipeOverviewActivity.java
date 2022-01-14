@@ -39,11 +39,6 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         sheetBehavior.setHideable(false);//prevents the bottom sheet from completely hiding off the screen
         sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);//initially state to fully expanded
 
-        ArrayList<String> items = new ArrayList<>();
-        items.add("Bewertung");
-        items.add("Name");
-        AutoCompleteTextView autoCompleteTextView = findViewById(R.id.txvOrderBy);
-        autoCompleteTextView.setAdapter(new ArrayAdapter(this, R.layout.dropdown_list_item, items));
         filterIcon.setOnClickListener(v -> {
             toggleFilters();
         });

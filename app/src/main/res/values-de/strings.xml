@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="categories">Kategorien</string>
+    <string name="app_name">Meine Rezepte</string>
+    <string name="add">Hinzufügen</string>
+    <string name="search_recipes">Suchen</string>
+    <string name="sortOrder">Sortierung</string>
+    <string name="rating">Rating</string>
+    <string name="title">Title</string>
+</resources>

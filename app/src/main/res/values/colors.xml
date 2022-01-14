@@ -7,6 +7,7 @@
     <color name="secondary">#CDDC39</color>
     <color name="secondary_dark">#6c7514</color>
     <color name="secondary_light">#212121</color>
+    <color name="secondary_unselect">#80CDDC39</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
