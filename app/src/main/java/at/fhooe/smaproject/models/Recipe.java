@@ -2,6 +2,9 @@ package at.fhooe.smaproject.models;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Recipe {
     private int id;
     private String title;
@@ -10,15 +13,17 @@ public class Recipe {
     private String comment;
     private int rating;
 
-    private String[] descriptionImagePaths;
+    private Collection<Category> categories;
+    private ArrayList<String> descriptionImagePaths;
 
-    public Recipe(int id, String title, Bitmap titleImage, String description, String comment, int rating, String[] descriptionImagePaths) {
+    public Recipe(int id, String title, Bitmap titleImage, String description, String comment, int rating, Collection<Category> categories, ArrayList<String> descriptionImagePaths) {
         this.id = id;
         this.title = title;
         this.titleImage = titleImage;
         this.description = description;
         this.comment = comment;
         this.rating = rating;
+        this.categories = categories;
         this.descriptionImagePaths = descriptionImagePaths;
     }
 
@@ -70,11 +75,19 @@ public class Recipe {
         this.rating = rating;
     }
 
-    public String[] getDescriptionImagePaths() {
+    public Collection<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Collection<Category> categories) {
+        this.categories = categories;
+    }
+
+    public ArrayList<String> getDescriptionImagePaths() {
         return descriptionImagePaths;
     }
 
-    public void setDescriptionImagePaths(String[] descriptionImagePaths) {
+    public void setDescriptionImagePaths(ArrayList<String> descriptionImagePaths) {
         this.descriptionImagePaths = descriptionImagePaths;
     }
 }
