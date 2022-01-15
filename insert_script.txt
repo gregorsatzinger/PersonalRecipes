@@ -1,0 +1,11 @@
+insert into category(name)
+values ('vegetarisch'), ('vegan');
+
+insert into recipe(title, titleimage, description, comment, rating)
+values('tTitle', null, 'tDescription', 'tComment', 5);
+
+insert into descriptionimage(imagepath, position, recipeid)
+values('tPath', 1, 1);
+
+insert into recipe_category(recipeid, categoryid)
+values(1, 1)
