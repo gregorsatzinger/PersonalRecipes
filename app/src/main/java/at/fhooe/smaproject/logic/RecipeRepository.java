@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import at.fhooe.smaproject.models.Recipe;
 
-public interface RecipeLogic {
+public interface RecipeRepository {
     // TODO: filter?
     Collection<Recipe> getAllRecipes();
 
