@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS Category
+(
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name  VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS Recipe
+(
+	id  INTEGER PRIMARY KEY AUTOINCREMENT,
+	title  VARCHAR(50),
+	description  TEXT,
+	comment  TEXT,
+	rating  INTEGER,
+	titleImage  BLOB
+);
+
+CREATE TABLE IF NOT EXISTS DescriptionImage
+(
+	id  INTEGER PRIMARY KEY AUTOINCREMENT,
+	imagePath  VARCHAR(100),
+	position  INTEGER,
+	recipeId  INTEGER,
+  	FOREIGN KEY(recipeId) REFERENCES Recipe(id)
+);
+
+CREATE TABLE IF NOT EXISTS Recipe_Category
+(
+	recipeId  INTEGER,
+	categoryId  INTEGER,
+  	PRIMARY KEY (recipeId, categoryId),
+  	FOREIGN KEY(recipeId) REFERENCES Recipe(id),
+  	FOREIGN KEY(categoryId) REFERENCES Category(id)
+)

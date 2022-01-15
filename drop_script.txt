@@ -1,0 +1,4 @@
+drop TABLE Recipe_Category;
+DROP TABLE DescriptionImage;
+DROP TABLE Recipe;
+DROP TABLE Category;
