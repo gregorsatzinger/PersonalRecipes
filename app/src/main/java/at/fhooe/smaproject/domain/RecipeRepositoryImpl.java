@@ -16,6 +16,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
     private final RecipeCategoryDao recipeCategoryDao;
     private final RecipeDao recipeDao;
 
+    //region helper methods
     private Recipe toDomainRecipe(DbRecipe dbRecipe) {
         // find all recipe-category relations
         Collection<DbRecipeCategory> recipeCategoryRelations
@@ -98,6 +99,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
             descriptionImageDao.delete(image.getId());
         }
     }
+    //endregion
 
     public RecipeRepositoryImpl(Context context) {
         categoryDao = new CategoryDao(context);
