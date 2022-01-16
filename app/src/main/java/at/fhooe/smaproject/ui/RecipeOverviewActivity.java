@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -14,8 +15,17 @@ import android.widget.LinearLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import at.fhooe.smaproject.R;
+import at.fhooe.smaproject.dal.DbRecipe;
+import at.fhooe.smaproject.dal.RecipeDao;
+import at.fhooe.smaproject.domain.RecipeRepository;
+import at.fhooe.smaproject.domain.RecipeRepositoryImpl;
+import at.fhooe.smaproject.models.Category;
+import at.fhooe.smaproject.models.Recipe;
 
 public class RecipeOverviewActivity extends AppCompatActivity {
     private static final String TAG = RecipeOverviewActivity.class.toString();
@@ -59,7 +69,8 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         Log.d("dbtest", dao.findById(1).getTitle());
         DbRecipe newRecipe = new DbRecipe(2, "xTitle", null,
                 "xDescription", "xComment", 3);
-        dao.insert(newRecipe);
+        int insertid = dao.insert(newRecipe);
+        Log.d("dbtest", "insertid: "+insertid);
         Log.d("dbtest", ""+dao.findById(2).getRating());
         newRecipe.setRating(4);
         dao.update(newRecipe);
@@ -73,6 +84,31 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         Log.d("dbtest", ""+dao.findByCategoryId(2).iterator().next().getRecipeId());
         dao.delete(1, 2);
         if(dao.findByCategoryId(2).size() == 0) Log.d("dbtest", "juhuuui");*/
+
+        RecipeRepository repo = new RecipeRepositoryImpl(this);
+        Recipe recipe = repo.findRecipeById(1);
+        System.out.println();
+        Recipe newRecipe = new Recipe(
+                -1, "xTitle", null, "xDescription", "xComment",
+                1, new ArrayList<Category>(Arrays.asList( new Category(2,""), new Category(4, ""))),
+                new ArrayList<String>(Arrays.asList("xPath1", "xPath2", "xPath3"))
+        );
+        repo.createRecipe(newRecipe);
+        Collection<Recipe> coll = repo.findAllRecipes();
+        System.out.println();
+        newRecipe.setRating(4);
+        ArrayList<Category> categories = newRecipe.getCategories();
+        categories.remove(1);
+        newRecipe.setCategories(categories);
+        ArrayList<String> imagePaths = newRecipe.getDescriptionImagePaths();
+        imagePaths.remove(1);
+        newRecipe.setDescriptionImagePaths(imagePaths);
+        repo.updateRecipe(newRecipe);
+        coll = repo.findAllRecipes();
+        System.out.println();
+        repo.deleteRecipe(newRecipe.getId());
+        coll = repo.findAllRecipes();
+        System.out.println();
     }
 
 

@@ -13,10 +13,10 @@ public class Recipe {
     private String comment;
     private int rating;
 
-    private Collection<Category> categories;
+    private ArrayList<Category> categories;
     private ArrayList<String> descriptionImagePaths;
 
-    public Recipe(int id, String title, Bitmap titleImage, String description, String comment, int rating, Collection<Category> categories, ArrayList<String> descriptionImagePaths) {
+    public Recipe(int id, String title, Bitmap titleImage, String description, String comment, int rating, ArrayList<Category> categories, ArrayList<String> descriptionImagePaths) {
         this.id = id;
         this.title = title;
         this.titleImage = titleImage;
@@ -29,6 +29,10 @@ public class Recipe {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -71,11 +75,11 @@ public class Recipe {
         this.rating = rating;
     }
 
-    public Collection<Category> getCategories() {
+    public ArrayList<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Collection<Category> categories) {
+    public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
     }
 

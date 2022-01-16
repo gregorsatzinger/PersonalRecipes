@@ -8,15 +8,15 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collection;
 
-class CategoryDao {
+public class CategoryDao {
 
     private DbHelper dbHelper;
 
-    CategoryDao(Context context) {
+    public CategoryDao(Context context) {
         dbHelper = new DbHelper(context);
     }
 
-    DbCategory findById(int id) {
+    public DbCategory findById(int id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] args = new String[]{ ""+id };
@@ -28,7 +28,7 @@ class CategoryDao {
         }
     }
 
-    Collection<DbCategory> findAll() {
+    public Collection<DbCategory> findAll() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         try(Cursor cursor = db.rawQuery("select id, name from category", null)) {
             ArrayList<DbCategory> coll = new ArrayList<>();

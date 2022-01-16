@@ -56,7 +56,7 @@ public class RecipeDao {
         }
     }
 
-    Collection<DbRecipe> findAll() {
+    public Collection<DbRecipe> findAll() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         try(Cursor cursor = db.rawQuery(
                 "select id, title, titleimage, description, comment, rating" +
@@ -75,7 +75,7 @@ public class RecipeDao {
         }
     }
 
-    public void insert(DbRecipe recipe) {
+    public int insert(DbRecipe recipe) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         Object[] args = new Object[]{
@@ -89,6 +89,10 @@ public class RecipeDao {
                         "title, titleimage, description, comment, rating)\n" +
                         "values(?,?,?,?,?)"
                 , args);
+        try(Cursor c = db.rawQuery("select last_insert_rowid()", null)) {
+            if(c.moveToNext()) return c.getInt(0);
+        }
+        return -1;
     }
 
     public void update(DbRecipe recipe) {

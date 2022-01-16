@@ -74,7 +74,7 @@ public class RecipeCategoryDao {
         }
     }
 
-    public void insert(DbRecipeCategory recipeCategory) {
+    public int insert(DbRecipeCategory recipeCategory) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         Object[] args = new Object[]{
@@ -84,6 +84,10 @@ public class RecipeCategoryDao {
         db.execSQL("insert into recipe_category(recipeid, categoryid)\n" +
                         "values(?,?)"
                 , args);
+        try(Cursor c = db.rawQuery("select last_insert_rowid()", null)) {
+            if(c.moveToNext()) return c.getInt(0);
+        }
+        return -1;
     }
 
     public void delete(int recipeid, int categoryid) {
