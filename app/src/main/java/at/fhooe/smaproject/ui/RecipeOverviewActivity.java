@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +53,10 @@ public class RecipeOverviewActivity extends AppCompatActivity {
 
         filterIcon.setOnClickListener(v -> {
             toggleFilters();
+        });
+        findViewById(R.id.fabAdd).setOnClickListener(v -> {
+            Intent intent = new Intent(this, RecipeDetailActivity.class);
+            startActivity(intent);
         });
 
         // great dao tests ((:
