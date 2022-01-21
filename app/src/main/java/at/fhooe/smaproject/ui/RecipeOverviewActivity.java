@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -70,6 +72,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         cgOrderBy.setOnCheckedChangeListener((a, b) -> updateCanteens());
 
         cgCategory = findViewById(R.id.cgCategory);
+        cgCategory.setOnCheckedChangeListener((a, b) -> updateCanteens());
         repo.findAllCategories().forEach(c -> cgCategory.addView(createChip(c)));
 
         sheetBehavior = BottomSheetBehavior.from(contentLayout);
@@ -161,7 +164,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
     }
 
     private Chip createChip(Category c) {
-        Chip chip = new Chip(this);
+        Chip chip = (Chip) LayoutInflater.from(this).inflate(R.layout.item_chip, (ViewGroup) cgCategory, false);
         chip.setText(c.getName());
         chip.setId(c.getId());
         return chip;

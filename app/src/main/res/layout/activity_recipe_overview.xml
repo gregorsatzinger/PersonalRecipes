@@ -78,16 +78,6 @@
                 android:id="@+id/cgCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Vegan"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Whatever"/>
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
@@ -151,7 +141,7 @@
             android:id="@+id/srlSwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBackGround">
+            android:background="@drawable/gradient_background">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvRecipes"
                 android:layout_width="match_parent"
