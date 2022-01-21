@@ -72,7 +72,6 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         cgOrderBy.setOnCheckedChangeListener((a, b) -> updateCanteens());
 
         cgCategory = findViewById(R.id.cgCategory);
-        cgCategory.setOnCheckedChangeListener((a, b) -> updateCanteens());
         repo.findAllCategories().forEach(c -> cgCategory.addView(createChip(c)));
 
         sheetBehavior = BottomSheetBehavior.from(contentLayout);
@@ -167,6 +166,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         Chip chip = (Chip) LayoutInflater.from(this).inflate(R.layout.item_chip, (ViewGroup) cgCategory, false);
         chip.setText(c.getName());
         chip.setId(c.getId());
+        chip.setOnCheckedChangeListener((a, b) -> updateCanteens());
         return chip;
     }
 
