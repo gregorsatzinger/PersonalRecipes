@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import at.fhooe.smaproject.dal.*;
 import at.fhooe.smaproject.models.Category;
@@ -172,5 +173,12 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
         // delete recipe
         recipeDao.delete(recipeId);
+    }
+
+    @Override
+    public Collection<Category> findAllCategories() {
+        return categoryDao.findAll().stream()
+                .map(dbCategory -> new Category(dbCategory.getId(), dbCategory.getName()))
+                .collect(Collectors.toList());
     }
 }

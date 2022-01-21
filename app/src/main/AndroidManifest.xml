@@ -12,7 +12,8 @@
         <activity
             android:name=".ui.RecipeDetailActivity"
             android:exported="false" />
-        <activity android:name=".ui.RecipeOverviewActivity">
+        <activity android:name=".ui.RecipeOverviewActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

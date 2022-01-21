@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/orderByGroup"
+                android:id="@+id/cgOrderBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:singleLine="true"
@@ -75,25 +75,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/categoryGroup"
+                android:id="@+id/cgCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:text="Vegan"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Whatever"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="Whatever"/>
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,6 +130,7 @@
                 android:importantForAutofill="no"
                 android:inputType="textFilter">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtSearchEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary_light"
@@ -158,12 +148,12 @@
 
         <!-- Content Body -->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swiperefresh"
+            android:id="@+id/srlSwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackGround">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvCanteens"
+                android:id="@+id/rcvRecipes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
