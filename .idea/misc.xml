@@ -6,11 +6,17 @@
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/drawable/ic_baseline_filter_list.xml" value="0.22135416666666666" />
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/drawable/ic_rounded_header.xml" value="0.22135416666666666" />
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/layout/activity_main.xml" value="0.2536231884057971" />
-        <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/layout/activity_recipe_detail.xml" value="0.2015625" />
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/layout/activity_recipe_overview.xml" value="0.33" />
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/layout/dropdown_list_item.xml" value="0.20520833333333333" />
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/layout/item_recipe.xml" value="0.33" />
         <entry key="..\:/Programming/FH/5_Semester/SMA/app/src/main/res/layout/seperator.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/layout/activity_image_capture.xml" value="0.1" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/layout/activity_image_capture_test.xml" value="0.1" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/layout/activity_recipe_detail.xml" value="0.1431159420289855" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/layout/activity_recipe_overview.xml" value="0.1" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/layout/dropdown_list_item.xml" value="0.1" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/layout/image_capture_test.xml" value="0.1" />
+        <entry key="..\:/Users/klaus/Documents/Android_Uebung/PersonalRecipes/app/src/main/res/xml/file_paths.xml" value="0.21458333333333332" />
       </map>
     </option>
   </component>
