@@ -19,9 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalRecipes">
         <activity
-            android:name=".ui.RecipeDetailActivity"
+            android:name=".ui.views.RecipeDetailActivity"
             android:exported="false" />
-        <activity android:name=".ui.RecipeOverviewActivity"
+        <activity android:name=".ui.views.RecipeOverviewActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

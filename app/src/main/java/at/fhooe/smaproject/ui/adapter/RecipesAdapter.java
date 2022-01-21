@@ -10,14 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import at.fhooe.smaproject.R;
 import at.fhooe.smaproject.models.Recipe;
-import at.fhooe.smaproject.ui.RecipeDetailActivity;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     private final List<Recipe> recipeList = new ArrayList<>();

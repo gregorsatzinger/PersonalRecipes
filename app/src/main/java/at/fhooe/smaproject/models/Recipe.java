@@ -27,6 +27,13 @@ public class Recipe {
         this.descriptionImagePaths = descriptionImagePaths;
     }
 
+    public Recipe() {
+        this.id = -1;
+        this.categories = new ArrayList<>();
+        this.descriptionImagePaths = new ArrayList<>();
+    }
+
+
     public int getId() {
         return id;
     }

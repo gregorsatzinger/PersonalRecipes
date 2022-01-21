@@ -1,10 +1,10 @@
-package at.fhooe.smaproject.ui;
+package at.fhooe.smaproject.ui.views;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,18 +23,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import at.fhooe.smaproject.R;
+import at.fhooe.smaproject.databinding.ActivityRecipeDetailBinding;
+import at.fhooe.smaproject.models.Recipe;
+import at.fhooe.smaproject.ui.viewmodels.RecipeViewModel;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-
+    private ActivityRecipeDetailBinding binding;
     private ImageView imvThumbnail;
     private String currentImagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_recipe_detail);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
+
+        binding.setViewModel(new RecipeViewModel(new Recipe())); //from intent
 
         ActionBar actionBar =  getSupportActionBar();
         if(actionBar != null) {
