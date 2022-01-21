@@ -7,4 +7,7 @@
     <string name="rating">Rating</string>
     <string name="title">Title</string>
     <string name="thumbnail">Thumbnail</string>
+    <string name="save">Save</string>
+    <string name="description">Description</string>
+    <string name="comment">Comment</string>
 </resources>

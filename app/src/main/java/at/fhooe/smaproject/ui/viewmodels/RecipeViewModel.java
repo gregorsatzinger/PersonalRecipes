@@ -5,12 +5,16 @@ import androidx.databinding.Bindable;
 
 import at.fhooe.smaproject.BR;
 import at.fhooe.smaproject.models.Recipe;
+import at.fhooe.smaproject.ui.utils.Mode;
 
 public class RecipeViewModel extends BaseObservable {
     private Recipe recipe;
+    private boolean isEdit;
+
     public RecipeViewModel(Recipe recipe) {
         this.recipe = recipe;
         recipe.setTitle("test");
+        isEdit = true;
     }
 
     @Bindable
@@ -29,4 +33,17 @@ public class RecipeViewModel extends BaseObservable {
             notifyPropertyChanged(BR.title);
         }
     }
+
+    @Bindable
+    public Boolean getIsEdit() {
+        return isEdit;
+    }
+
+    public void setIsEdit(boolean value) {
+        if (isEdit != value) {
+            isEdit = value;
+            notifyPropertyChanged(BR.isEdit);
+        }
+    }
+
 }

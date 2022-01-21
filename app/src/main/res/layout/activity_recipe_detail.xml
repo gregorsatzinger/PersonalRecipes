@@ -7,30 +7,74 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_margin="@dimen/distance_small"
         xmlns:android="http://schemas.android.com/apk/res/android">
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/title"
+            android:inputType="text"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="@{viewModel.isEdit}"
+                android:text="@={viewModel.title}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/imvThumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:src="@drawable/ic_baseline_image_128"
+            android:contentDescription="TODO" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/description"
+            android:inputType="text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="@{viewModel.isEdit}"
+                android:text="@={viewModel.title}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/comment"
+            android:inputType="text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:enabled="@{viewModel.isEdit}"
                 android:text="@={viewModel.title}"/>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
-            android:text="@{viewModel.title}" />
-        <ImageView
-            android:id="@+id/imvThumbnail"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:text="@string/categories" />
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:contentDescription="TODO" />
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:text="@string/rating" />
+        <RatingBar
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/distance_small"
+            android:isIndicator="@{!viewModel.isEdit}"
+            android:numStars="5" />
         <Button
             android:id="@+id/btnStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start dein test" />
+            android:enabled="@{viewModel.isEdit}"
+            android:text="@string/save" />
     </LinearLayout>
 </layout>

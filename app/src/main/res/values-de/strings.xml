@@ -6,6 +6,9 @@
     <string name="search_recipes">Suchen</string>
     <string name="sortOrder">Sortierung</string>
     <string name="rating">Rating</string>
-    <string name="title">Title</string>
-    <string name="thumbnail">Thumbnail</string>
+    <string name="title">Titel</string>
+    <string name="thumbnail">Titelbild</string>
+    <string name="save">Speichern</string>
+    <string name="description">Beschreibung</string>
+    <string name="comment">Kommentar</string>
 </resources>

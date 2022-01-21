@@ -48,10 +48,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             actionBar.setTitle("Details");
         }
         imvThumbnail = findViewById(R.id.imvThumbnail);
-        imvThumbnail.setImageResource(R.drawable.ic_baseline_image_128);
 
-        Button btn = findViewById(R.id.btnStart);
-        btn.setOnClickListener((l) -> {
+        imvThumbnail.setOnClickListener((l) -> {
             dispatchTakePictureIntent();
         });
     }
