@@ -7,6 +7,7 @@ import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -24,24 +25,34 @@ import java.util.Date;
 
 import at.fhooe.smaproject.R;
 import at.fhooe.smaproject.databinding.ActivityRecipeDetailBinding;
+import at.fhooe.smaproject.domain.RecipeRepository;
+import at.fhooe.smaproject.domain.RecipeRepositoryImpl;
 import at.fhooe.smaproject.models.Recipe;
 import at.fhooe.smaproject.ui.viewmodels.RecipeViewModel;
 
 public class RecipeDetailActivity extends AppCompatActivity {
-
+    private static final String RECIPE_ID_KEY = "RecipeId";
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    private RecipeRepository repo;
     private ActivityRecipeDetailBinding binding;
     private ImageView imvThumbnail;
     private String currentImagePath;
 
+    public static Intent createIntent(Context context, int canteenId) {
+        Intent intent = new Intent(context, RecipeDetailActivity.class);
+        intent.putExtra(RECIPE_ID_KEY, canteenId);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_recipe_detail);
+        repo = new RecipeRepositoryImpl(this);
+        Intent intent = getIntent();
+        int recipeId = intent.getIntExtra(RECIPE_ID_KEY, -1);
+        Recipe currentRecipe = (recipeId == -1) ? new Recipe() : repo.findRecipeById(recipeId);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
-
-        binding.setViewModel(new RecipeViewModel(new Recipe())); //from intent
+        binding.setViewModel(new RecipeViewModel(currentRecipe));
 
         ActionBar actionBar =  getSupportActionBar();
         if(actionBar != null) {

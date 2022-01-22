@@ -13,8 +13,11 @@ public class RecipeViewModel extends BaseObservable {
 
     public RecipeViewModel(Recipe recipe) {
         this.recipe = recipe;
-        recipe.setTitle("test");
-        isEdit = true;
+        this.isEdit = recipe.getId() == -1;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
     }
 
     @Bindable
@@ -45,5 +48,7 @@ public class RecipeViewModel extends BaseObservable {
             notifyPropertyChanged(BR.isEdit);
         }
     }
+
+
 
 }

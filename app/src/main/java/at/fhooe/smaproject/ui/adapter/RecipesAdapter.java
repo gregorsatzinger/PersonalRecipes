@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.StringJoiner;
 
 import at.fhooe.smaproject.R;
+import at.fhooe.smaproject.models.Category;
 import at.fhooe.smaproject.models.Recipe;
+import at.fhooe.smaproject.ui.views.RecipeDetailActivity;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     private final List<Recipe> recipeList = new ArrayList<>();
@@ -48,6 +51,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tcvTitle = itemView.findViewById(R.id.tcvTitle);
+        private final TextView tcvCategories = itemView.findViewById(R.id.tcvCategories);
         private final RatingBar rtbAverageRating = itemView.findViewById(R.id.rtbAverageRating);
 
         ViewHolder(View itemView) {
@@ -57,7 +61,11 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         void updateView(final Recipe recipe) {
             tcvTitle.setText(recipe.getTitle());
             rtbAverageRating.setRating(recipe.getRating());
-            //itemView.setOnClickListener(v -> v.getContext().startActivity(RecipeDetailActivity.createIntent(v.getContext(), recipe.getId())));
+            Collection<Category> categories = recipe.getCategories();
+            StringJoiner joiner = new StringJoiner(", ");
+            categories.forEach(c -> joiner.add(c.getName()));
+            tcvCategories.setText(joiner.toString());
+            itemView.setOnClickListener(v -> v.getContext().startActivity(RecipeDetailActivity.createIntent(v.getContext(), recipe.getId())));
         }
     }
 }
