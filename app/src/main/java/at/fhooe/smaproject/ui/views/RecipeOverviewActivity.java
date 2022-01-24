@@ -87,7 +87,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         });
 
 
-        TextInputEditText l = (TextInputEditText) findViewById(R.id.edtSearchEdit);
+        TextInputEditText l = findViewById(R.id.edtSearchEdit);
         l.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -191,8 +191,8 @@ public class RecipeOverviewActivity extends AppCompatActivity {
                         .filter(r ->  cgCategory.getCheckedChipIds().stream().allMatch(cId -> r.getCategories().stream().anyMatch(c -> c.getId() == cId)))
                         .sorted((o1, o2) -> {
                             switch (cgOrderBy.getCheckedChipId()) {
-                                case 1: return o1.getRating() - o2.getRating();
-                                case 2: return o2.getRating() - o1.getRating();
+                                case 1: return (int)((o1.getRating() - o2.getRating()) * 10);
+                                case 2: return (int)((o2.getRating() - o1.getRating()) * 10);
                                 case 3: return o1.getTitle().compareToIgnoreCase(o2.getTitle());
                                 case 4: return o2.getTitle().compareToIgnoreCase(o1.getTitle());
                                 default: return 0;

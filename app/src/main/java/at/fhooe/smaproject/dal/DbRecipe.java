@@ -8,9 +8,9 @@ public class DbRecipe {
     private Bitmap titleimage;
     private String description;
     private String comment;
-    private int rating;
+    private float rating;
 
-    public DbRecipe(int id, String title, Bitmap titleimage, String description, String comment, int rating) {
+    public DbRecipe(int id, String title, Bitmap titleimage, String description, String comment, float rating) {
         this.id = id;
         this.title = title;
         this.titleimage = titleimage;
@@ -55,7 +55,7 @@ public class DbRecipe {
         this.comment = comment;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 

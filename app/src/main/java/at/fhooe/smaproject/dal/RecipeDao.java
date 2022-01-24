@@ -49,7 +49,7 @@ public class RecipeDao {
                         blobToBitmap(cursor.getBlob(2)),
                         cursor.getString(3),
                         cursor.getString(4),
-                        cursor.getInt(5)
+                        cursor.getFloat(5)
                 );
             }
             return null;
@@ -69,7 +69,7 @@ public class RecipeDao {
                         blobToBitmap(cursor.getBlob(2)),
                         cursor.getString(3),
                         cursor.getString(4),
-                        cursor.getInt(5)));
+                        cursor.getFloat(5)));
             }
             return coll;
         }

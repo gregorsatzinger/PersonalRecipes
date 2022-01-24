@@ -22,7 +22,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/title"
                     android:inputType="text"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -35,7 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="150dp"
                     android:src="@drawable/ic_baseline_image_128"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="@string/thumbnail" />
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -47,7 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="@{viewModel.isEdit}"
-                        android:text="@={viewModel.recipe.description}"/>
+                        android:text="@={viewModel.description}"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -59,13 +60,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:enabled="@{viewModel.isEdit}"
-                        android:text="@={viewModel.title}"/>
+                        android:text="@={viewModel.comment}"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MaterialComponents.Body1"
                     android:text="@string/categories" />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/cgCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,21 +87,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/distance_small"
                     android:isIndicator="@{!viewModel.isEdit}"
-                    android:numStars="5" />
+                    android:rating="@={viewModel.rating}" />
             </LinearLayout>
         </ScrollView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:src="@drawable/ic_baseline_check_24"
             android:contentDescription="@string/save"
             android:layout_margin="16dp"
-            android:onClick="@{() -> viewModel.setIsEdit(false)}"
             android:visibility="@{!viewModel.isEdit ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

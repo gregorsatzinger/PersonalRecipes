@@ -1,11 +1,14 @@
 package at.fhooe.smaproject.ui.viewmodels;
 
+import android.widget.RatingBar;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
 
 import at.fhooe.smaproject.BR;
 import at.fhooe.smaproject.models.Recipe;
-import at.fhooe.smaproject.ui.utils.Mode;
 
 public class RecipeViewModel extends BaseObservable {
     private Recipe recipe;
@@ -15,6 +18,10 @@ public class RecipeViewModel extends BaseObservable {
         this.recipe = recipe;
         this.isEdit = recipe.getId() == -1;
     }
+
+    /*
+    public static void setRating(RatingBar mboundView4, float viewModelRating) {
+    }*/
 
     public Recipe getRecipe() {
         return recipe;
@@ -26,16 +33,49 @@ public class RecipeViewModel extends BaseObservable {
     }
 
     public void setTitle(String value) {
-        // Avoids infinite loops.
         if (!recipe.getTitle().equals(value)) {
             recipe.setTitle(value);
-
-            // TODO: React to the change.
-
-            // Notify observers of a new value.
             notifyPropertyChanged(BR.title);
         }
     }
+
+    @Bindable
+    public String getComment() {
+        return recipe.getComment();
+    }
+
+    public void setComment(String value) {
+        if (!recipe.getComment().equals(value)) {
+            recipe.setComment(value);
+            notifyPropertyChanged(BR.comment);
+        }
+    }
+
+    @Bindable
+    public String getDescription() {
+        return recipe.getDescription();
+    }
+
+    public void setDescription(String value) {
+        if (!recipe.getDescription().equals(value)) {
+            recipe.setDescription(value);
+            notifyPropertyChanged(BR.description);
+        }
+    }
+
+    @Bindable
+    public float getRating() {
+        return recipe.getRating();
+    }
+
+    public void setRating(float value) {
+        if (recipe.getRating() != value) {
+            recipe.setRating(value);
+            notifyPropertyChanged(BR.rating);
+        }
+    }
+
+
 
     @Bindable
     public Boolean getIsEdit() {

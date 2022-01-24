@@ -11,12 +11,12 @@ public class Recipe {
     private Bitmap titleImage;
     private String description;
     private String comment;
-    private int rating;
+    private float rating;
 
     private ArrayList<Category> categories;
     private ArrayList<String> descriptionImagePaths;
 
-    public Recipe(int id, String title, Bitmap titleImage, String description, String comment, int rating, ArrayList<Category> categories, ArrayList<String> descriptionImagePaths) {
+    public Recipe(int id, String title, Bitmap titleImage, String description, String comment, float rating, ArrayList<Category> categories, ArrayList<String> descriptionImagePaths) {
         this.id = id;
         this.title = title;
         this.titleImage = titleImage;
@@ -31,6 +31,10 @@ public class Recipe {
         this.id = -1;
         this.categories = new ArrayList<>();
         this.descriptionImagePaths = new ArrayList<>();
+        this.title = "";
+        this.description = "";
+        this.comment = "";
+        this.rating = 5;
     }
 
 
@@ -74,11 +78,11 @@ public class Recipe {
         this.comment = comment;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
