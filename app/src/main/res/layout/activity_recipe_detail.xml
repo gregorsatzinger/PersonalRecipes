@@ -109,7 +109,6 @@
             android:src="@drawable/ic_baseline_edit"
             android:contentDescription="@string/edit"
             android:layout_margin="16dp"
-            android:onClick="@{() -> viewModel.setIsEdit(true)}"
             android:visibility="@{viewModel.isEdit ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.material.chip.Chip;
@@ -28,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import at.fhooe.smaproject.R;
@@ -40,13 +39,16 @@ import at.fhooe.smaproject.ui.viewmodels.RecipeViewModel;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private static final String RECIPE_ID_KEY = "RecipeId";
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_THUMBNAIL_CAPTURE = 1;
+    static final int REQUEST_DESCRIPTION_IMAGE_CAPTURE=2;
     private RecipeRepository repo;
     private ActivityRecipeDetailBinding binding;
+    private RecipeViewModel viewModel;
     private ImageView imvThumbnail;
     private String currentImagePath;
     private ChipGroup cgCategory;
     private FloatingActionButton fabSave;
+    private FloatingActionButton fabEdit;
 
     public static Intent createIntent(Context context, int canteenId) {
         Intent intent = new Intent(context, RecipeDetailActivity.class);
@@ -62,7 +64,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         int recipeId = intent.getIntExtra(RECIPE_ID_KEY, -1);
         Recipe currentRecipe = (recipeId == -1) ? new Recipe() : repo.findRecipeById(recipeId);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
-        RecipeViewModel viewModel = new RecipeViewModel(currentRecipe);
+        viewModel = new RecipeViewModel(currentRecipe);
         binding.setViewModel(viewModel);
 
         ActionBar actionBar =  getSupportActionBar();
@@ -70,24 +72,58 @@ public class RecipeDetailActivity extends AppCompatActivity {
             actionBar.setTitle("Details");
         }
         imvThumbnail = findViewById(R.id.imvThumbnail);
-
+        updateTitleImage();
         imvThumbnail.setOnClickListener((l) -> {
-            dispatchTakePictureIntent();
+            if(viewModel.getIsEdit()) captureImageAndGetThumbnail();
         });
 
         cgCategory = findViewById(R.id.cgCategory);
-        repo.findAllCategories().forEach(c -> cgCategory.addView(createChip(c)));
+        updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
 
         fabSave = findViewById(R.id.fabSave);
         fabSave.setOnClickListener(v -> {
             viewModel.setIsEdit(false);
+
+            // get selected categories
+            ArrayList<Category> categories = new ArrayList<>();
+            cgCategory.getCheckedChipIds().forEach(chipId -> {
+                Chip chip = cgCategory.findViewById(chipId);
+                categories.add(new Category(chipId, chip.getText().toString()));
+            });
+
             Recipe recipe = viewModel.getRecipe();
+            recipe.setCategories(categories);
+            updateCategoryChipGroup(viewModel.getIsEdit(), recipe);
+
             if(recipe.getId() > 0) {
                 repo.updateRecipe(recipe);
             } else {
                 repo.createRecipe(recipe);
             }
         });
+
+        fabEdit = findViewById(R.id.fabEdit);
+        fabEdit.setOnClickListener(v -> {
+            viewModel.setIsEdit(true);
+            updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
+        });
+    }
+
+    private void updateCategoryChipGroup(boolean isEdit, Recipe recipe) {
+        if(isEdit) {
+            cgCategory.removeAllViews();
+            repo.findAllCategories().forEach(c -> {
+                boolean selected = recipe.getCategories().contains(c);
+                cgCategory.addView(createChip(c, selected));
+            });
+        } else {
+            cgCategory.removeAllViews();
+            recipe.getCategories().forEach(c -> cgCategory.addView(createChip(c, false)));
+        }
+    }
+
+    private void updateTitleImage() {
+        imvThumbnail.setImageBitmap(viewModel.getRecipe().getTitleImage());
     }
 
     private boolean deleteFileByPath(String filePath) {
@@ -113,22 +149,29 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            // image successfully captured
-            Log.d("imageCaptureTest", "successfully captured image.");
-
-            /*if(deleteFileByPath(currentImagePath)) {
-                Log.d("imageCaptureTest", "successfully deleted image.");
-            } else {
-                Log.d("imageCaptureTest", "unsuccessfully deleted image.");
-            }*/
-            imvThumbnail.setImageBitmap(readBitmapFromFile(currentImagePath));
-        } else {
-            Log.d("imageCaptureTest", "failed to capture image");
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_DESCRIPTION_IMAGE_CAPTURE) {
+                Log.d("imageCaptureTest", "successfully captured and saved image.");
+                Bitmap bitmap = readBitmapFromFile(currentImagePath);
+            } else if (requestCode == REQUEST_THUMBNAIL_CAPTURE) {
+                Log.d("imageCaptureTest", "successfully captured and thumbnailed image.");
+                Bundle extras = data.getExtras();
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                viewModel.getRecipe().setTitleImage(bitmap);
+                updateTitleImage();
+            }
         }
     }
 
-    private void dispatchTakePictureIntent() {
+    private void captureImageAndGetThumbnail() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_THUMBNAIL_CAPTURE);
+        }
+    }
+
+    private void captureAndSaveImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -146,7 +189,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         "com.example.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, REQUEST_DESCRIPTION_IMAGE_CAPTURE);
             }
         }
     }
@@ -167,10 +210,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
         return image;
     }
 
-    private Chip createChip(Category c) {
+    private Chip createChip(Category c, boolean selected) {
         Chip chip = (Chip) LayoutInflater.from(this).inflate(R.layout.item_chip, (ViewGroup) cgCategory, false);
         chip.setText(c.getName());
         chip.setId(c.getId());
+        chip.setChecked(selected);
+        Log.d("chiptest", "name: "+ c.getName() +", sel: "+selected);
         return chip;
     }
 }

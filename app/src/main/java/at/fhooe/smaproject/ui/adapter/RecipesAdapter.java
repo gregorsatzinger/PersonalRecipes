@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imvThumbnail = itemView.findViewById(R.id.imvThumbnail);
         private final TextView tcvTitle = itemView.findViewById(R.id.tcvTitle);
         private final TextView tcvCategories = itemView.findViewById(R.id.tcvCategories);
         private final RatingBar rtbAverageRating = itemView.findViewById(R.id.rtbAverageRating);
@@ -59,6 +61,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         }
 
         void updateView(final Recipe recipe) {
+            imvThumbnail.setImageBitmap(recipe.getTitleImage());
             tcvTitle.setText(recipe.getTitle());
             rtbAverageRating.setRating(recipe.getRating());
             Collection<Category> categories = recipe.getCategories();
