@@ -23,6 +23,14 @@ public class RecipeViewModel extends BaseObservable {
     public static void setRating(RatingBar mboundView4, float viewModelRating) {
     }*/
 
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+        notifyPropertyChanged(BR.title);
+        notifyPropertyChanged(BR.comment);
+        notifyPropertyChanged(BR.description);
+        notifyPropertyChanged(BR.rating);
+    }
+
     public Recipe getRecipe() {
         return recipe;
     }

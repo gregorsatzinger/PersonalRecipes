@@ -6,17 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.material.chip.Chip;
@@ -27,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import at.fhooe.smaproject.R;
@@ -50,6 +54,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private FloatingActionButton fabSave;
     private FloatingActionButton fabEdit;
 
+    private final ArrayList<String> newDescriptionImagePaths = new ArrayList<>();
+
     public static Intent createIntent(Context context, int canteenId) {
         Intent intent = new Intent(context, RecipeDetailActivity.class);
         intent.putExtra(RECIPE_ID_KEY, canteenId);
@@ -62,23 +68,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
         repo = new RecipeRepositoryImpl(this);
         Intent intent = getIntent();
         int recipeId = intent.getIntExtra(RECIPE_ID_KEY, -1);
-        Recipe currentRecipe = (recipeId == -1) ? new Recipe() : repo.findRecipeById(recipeId);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
-        viewModel = new RecipeViewModel(currentRecipe);
+        viewModel = new RecipeViewModel(new Recipe());
         binding.setViewModel(viewModel);
 
-        ActionBar actionBar =  getSupportActionBar();
-        if(actionBar != null) {
+        if(recipeId != -1) fetchRecipeById(recipeId);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
             actionBar.setTitle("Details");
         }
         imvThumbnail = findViewById(R.id.imvThumbnail);
-        updateTitleImage();
         imvThumbnail.setOnClickListener((l) -> {
-            if(viewModel.getIsEdit()) captureImageAndGetThumbnail();
+            if (viewModel.getIsEdit()) captureImageAndGetThumbnail();
         });
 
         cgCategory = findViewById(R.id.cgCategory);
-        updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
 
         fabSave = findViewById(R.id.fabSave);
         fabSave.setOnClickListener(v -> {
@@ -95,10 +100,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
             recipe.setCategories(categories);
             updateCategoryChipGroup(viewModel.getIsEdit(), recipe);
 
-            if(recipe.getId() > 0) {
-                repo.updateRecipe(recipe);
+            // no new images after saving
+            newDescriptionImagePaths.clear();
+
+            if (recipe.getId() > 0) {
+                updateRecipe(recipe);
             } else {
-                repo.createRecipe(recipe);
+                saveRecipe(recipe);
             }
         });
 
@@ -107,15 +115,88 @@ public class RecipeDetailActivity extends AppCompatActivity {
             viewModel.setIsEdit(true);
             updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
         });
+
+        // TODO: @gregor
+        /*addDescriptionImageBtn.setOnClickListener(v -> {
+            captureAndSaveImage();
+        }*/
+
+        /*deleteDescriptionImageBtn.setOnClickListener(v -> {
+            String path = //find currently displayed image
+
+            if(newDescriptionImagePaths.contains(path)) {
+                newDescriptionImagePaths.remove(path);
+            }
+
+            viewModel.getRecipe().getDescriptionImagePaths().remove(path);
+            deleteFileByPath(path);
+            updateDescriptionImages();
+        }*/
     }
 
+    private void initUIFields() {
+        updateTitleImage();
+        updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
+        updateDescriptionImages();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void fetchRecipeById(int id) {
+        new AsyncTask<String, Void, Recipe>() {
+            @Override
+            protected Recipe doInBackground(String... params) {
+                return repo.findRecipeById(Integer.parseInt(params[0]));
+            }
+
+            @Override
+            protected void onPostExecute(Recipe recipe) {
+                viewModel.setRecipe(recipe);
+                initUIFields();
+            }
+        }.execute(""+id);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void updateRecipe(Recipe recipe) {
+        new AsyncTask<Recipe, Void, Void>() {
+            @Override
+            protected Void doInBackground(Recipe... recipes) {
+                repo.updateRecipe(recipes[0]);
+                return null;
+            }
+        }.execute(recipe);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void saveRecipe(Recipe recipe) {
+        new AsyncTask<Recipe, Void, Void>() {
+            @Override
+            protected Void doInBackground(Recipe... recipes) {
+                repo.createRecipe(recipes[0]);
+                return null;
+            }
+        }.execute(recipe);
+    }
+
+    @SuppressLint("StaticFieldLeak")
     private void updateCategoryChipGroup(boolean isEdit, Recipe recipe) {
         if(isEdit) {
             cgCategory.removeAllViews();
-            repo.findAllCategories().forEach(c -> {
-                boolean selected = recipe.getCategories().contains(c);
-                cgCategory.addView(createChip(c, selected));
-            });
+
+            new AsyncTask<String, Void, Collection<Category>>() {
+                @Override
+                protected Collection<Category> doInBackground(String... params) {
+                    return repo.findAllCategories();
+                }
+
+                @Override
+                protected void onPostExecute(Collection<Category> categories) {
+                    categories.forEach(c -> {
+                        boolean selected = recipe.getCategories().contains(c);
+                        cgCategory.addView(createChip(c, selected));
+                    });
+                }
+            }.execute();
         } else {
             cgCategory.removeAllViews();
             recipe.getCategories().forEach(c -> cgCategory.addView(createChip(c, false)));
@@ -124,6 +205,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void updateTitleImage() {
         imvThumbnail.setImageBitmap(viewModel.getRecipe().getTitleImage());
+    }
+
+    private void updateDescriptionImages() {
+        for(String path : viewModel.getRecipe().getDescriptionImagePaths()) {
+            //Bitmap bitmap = readBitmapFromFile(path);
+            //TODO: @gregor  add bitmaps to imageviews
+        }
     }
 
     private boolean deleteFileByPath(String filePath) {
@@ -152,7 +240,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_DESCRIPTION_IMAGE_CAPTURE) {
                 Log.d("imageCaptureTest", "successfully captured and saved image.");
-                Bitmap bitmap = readBitmapFromFile(currentImagePath);
+                newDescriptionImagePaths.add(currentImagePath);
+                viewModel.getRecipe().getDescriptionImagePaths().add(currentImagePath);
+                updateDescriptionImages();
             } else if (requestCode == REQUEST_THUMBNAIL_CAPTURE) {
                 Log.d("imageCaptureTest", "successfully captured and thumbnailed image.");
                 Bundle extras = data.getExtras();
@@ -161,6 +251,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 updateTitleImage();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(viewModel.getIsEdit()) {
+            //delete unsaved title images
+            for(String path : newDescriptionImagePaths) {
+                deleteFileByPath(path);
+            }
+        }
+        Log.d("destroytest", "deleted unsafed images!");
     }
 
     private void captureImageAndGetThumbnail() {
