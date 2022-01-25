@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.google.android.material.chip.Chip;
@@ -53,6 +54,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ImageView imvThumbnail;
     private String currentImagePath;
     private ChipGroup cgCategory;
+    private CarouselView carousel;
     private FloatingActionButton fabSave;
     private FloatingActionButton fabEdit;
 
@@ -86,15 +88,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
 
         cgCategory = findViewById(R.id.cgCategory);
-        int [] images = {R.drawable.ic_baseline_arrow_downward, R.drawable.ic_baseline_arrow_drop_up, R.drawable.ic_baseline_edit};
-
-        CarouselView carousel = findViewById(R.id.carousel);
-        carousel.setPageCount(images.length);
-        carousel.setImageListener((pos, view) -> {
-            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            view.setImageResource(images[pos]);
-        });
-
+        carousel = findViewById(R.id.carousel);
         fabSave = findViewById(R.id.fabSave);
         fabSave.setOnClickListener(v -> {
             viewModel.setIsEdit(false);
@@ -127,12 +121,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
 
         // TODO: @gregor
-        /*addDescriptionImageBtn.setOnClickListener(v -> {
+        ImageButton addDescriptionImageBtn = findViewById(R.id.btnTakePhoto);
+        addDescriptionImageBtn.setOnClickListener(v -> {
             captureAndSaveImage();
-        }*/
+        });
 
-        /*deleteDescriptionImageBtn.setOnClickListener(v -> {
-            String path = //find currently displayed image
+        ImageButton deleteDescriptionImageBtn = findViewById(R.id.btnDeletePhoto);
+        deleteDescriptionImageBtn.setOnClickListener(v -> {
+            String path = viewModel.getRecipe().getDescriptionImagePaths().get(carousel.getCurrentItem());
 
             if(newDescriptionImagePaths.contains(path)) {
                 newDescriptionImagePaths.remove(path);
@@ -141,7 +137,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             viewModel.getRecipe().getDescriptionImagePaths().remove(path);
             deleteFileByPath(path);
             updateDescriptionImages();
-        }*/
+        });
     }
 
     private void initUIFields() {
@@ -218,10 +214,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void updateDescriptionImages() {
-        for(String path : viewModel.getRecipe().getDescriptionImagePaths()) {
-            //Bitmap bitmap = readBitmapFromFile(path);
-            //TODO: @gregor  add bitmaps to imageviews
-        }
+        ArrayList<String> imagePaths = viewModel.getRecipe().getDescriptionImagePaths();
+        carousel.setImageListener((pos, view) -> {
+            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            Bitmap bitmap = readBitmapFromFile(imagePaths.get(pos));
+            view.setImageBitmap(bitmap);
+        });
+        carousel.setPageCount(imagePaths.size());
     }
 
     private boolean deleteFileByPath(String filePath) {
