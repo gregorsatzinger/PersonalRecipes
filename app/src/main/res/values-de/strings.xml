@@ -12,4 +12,5 @@
     <string name="description">Beschreibung</string>
     <string name="comment">Kommentar</string>
     <string name="edit">Edit</string>
+    <string name="take_photo">Take photo</string>
 </resources>

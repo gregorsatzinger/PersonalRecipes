@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.synnapps.carouselview.CarouselView;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +86,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
 
         cgCategory = findViewById(R.id.cgCategory);
+        int [] images = {R.drawable.ic_baseline_arrow_downward, R.drawable.ic_baseline_arrow_drop_up, R.drawable.ic_baseline_edit};
+
+        CarouselView carousel = findViewById(R.id.carousel);
+        carousel.setPageCount(images.length);
+        carousel.setImageListener((pos, view) -> {
+            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            view.setImageResource(images[pos]);
+        });
 
         fabSave = findViewById(R.id.fabSave);
         fabSave.setOnClickListener(v -> {

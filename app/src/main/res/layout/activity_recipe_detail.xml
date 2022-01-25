@@ -30,12 +30,69 @@
                         android:text="@={viewModel.title}"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/imvThumbnail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
-                    android:src="@drawable/ic_baseline_image_128"
-                    android:contentDescription="@string/thumbnail" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/distance_small"
+                    android:layout_marginBottom="@dimen/distance_small">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/thumbnail"
+                        android:id="@+id/txvThumbnail"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <ImageView
+                        android:id="@+id/imvThumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="120dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_baseline_image_128"
+                        android:contentDescription="@string/thumbnail"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:id="@+id/txvCarousel"
+                        app:layout_constraintEnd_toStartOf="@id/btnTakePhoto"
+                        app:layout_constraintStart_toEndOf="@id/txvThumbnail"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                    <ImageButton
+                        android:id="@+id/btnTakePhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_camera"
+                        app:layout_constraintEnd_toStartOf="@+id/btnDeletePhoto"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/take_photo" />
+                    <ImageButton
+                        android:id="@+id/btnDeletePhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_delete_24"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/take_photo" />
+                    <com.synnapps.carouselview.CarouselView
+                        android:id="@+id/carousel"
+                        app:pageColor="@color/secondary_dark"
+                        app:fillColor="@color/secondary"
+                        app:radius="6dp"
+                        app:autoPlay="false"
+                        app:strokeColor="@color/secondary_dark"
+                        app:strokeWidth="1dp"
+                        android:layout_height="120dp"
+                        android:layout_width="0dp"
+                        app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
+                        app:layout_constraintStart_toEndOf="@id/imvThumbnail"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
                 <com.google.android.material.textfield.TextInputLayout
