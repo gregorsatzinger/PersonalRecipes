@@ -49,16 +49,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String INSERT_SCRIPT =
             "insert into category(name)\n" +
-                    "values ('vegetarisch'), ('vegan'), ('fleisch'), ('mehlspeise');\n" +
-                    "\n" +
-                    "insert into recipe(title, titleimage, description, comment, rating)\n" +
-                    "values('tTitle', null, 'tDescription', 'tComment', 5);\n" +
-                    "\n" +
-                    "insert into descriptionimage(imagepath, position, recipeid)\n" +
-                    "values('tPath1', 1, 1), ('tPath3', 3, 1), ('tPath2', 2, 1);\n" +
-                    "\n" +
-                    "insert into recipe_category(recipeid, categoryid)\n" +
-                    "values(1, 1),(1, 3)";
+            "values ('Vegetarisch'), ('Vegan'), ('Fleisch'), ('Mehlspeise'), ('Dessert'), ('Suppe'), ('Knödel'), ('Beilage'), ('Aufstrich'), ('Vorspeise'), ('Pizza');";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

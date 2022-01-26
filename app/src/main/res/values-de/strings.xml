@@ -11,6 +11,7 @@
     <string name="save">Speichern</string>
     <string name="description">Beschreibung</string>
     <string name="comment">Kommentar</string>
-    <string name="edit">Edit</string>
-    <string name="take_photo">Take photo</string>
+    <string name="edit">Editieren</string>
+    <string name="take_photo">Foto</string>
+    <string name="additional_images">Zusätzliche Bilder</string>
 </resources>

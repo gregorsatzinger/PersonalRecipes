@@ -30,7 +30,7 @@ public class CategoryDao {
 
     public Collection<DbCategory> findAll() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try(Cursor cursor = db.rawQuery("select id, name from category", null)) {
+        try(Cursor cursor = db.rawQuery("select id, name from category order by name asc", null)) {
             ArrayList<DbCategory> coll = new ArrayList<>();
             while(cursor.moveToNext()) {
                 coll.add(new DbCategory(cursor.getInt(0), cursor.getString(1)));

@@ -1,11 +1,7 @@
 package at.fhooe.smaproject.ui.viewmodels;
 
-import android.widget.RatingBar;
-
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingAdapter;
 
 import at.fhooe.smaproject.BR;
 import at.fhooe.smaproject.models.Recipe;
@@ -19,12 +15,10 @@ public class RecipeViewModel extends BaseObservable {
         this.isEdit = recipe.getId() == -1;
     }
 
-    /*
-    public static void setRating(RatingBar mboundView4, float viewModelRating) {
-    }*/
-
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+        this.isEdit = recipe.getId() == -1;
+        notifyPropertyChanged(BR.isEdit);
         notifyPropertyChanged(BR.title);
         notifyPropertyChanged(BR.comment);
         notifyPropertyChanged(BR.description);

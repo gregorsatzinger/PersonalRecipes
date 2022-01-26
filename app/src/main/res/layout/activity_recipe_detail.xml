@@ -49,20 +49,21 @@
                         android:layout_height="120dp"
                         android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_baseline_image_128"
+                        android:src="@drawable/ic_baseline_camera"
                         android:contentDescription="@string/thumbnail"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/description"
+                        android:text="@string/additional_images"
                         android:id="@+id/txvCarousel"
                         app:layout_constraintEnd_toStartOf="@id/btnTakePhoto"
                         app:layout_constraintStart_toEndOf="@id/txvThumbnail"
                         app:layout_constraintTop_toTopOf="parent"/>
                     <ImageButton
                         android:id="@+id/btnTakePhoto"
+                        android:visibility="@{viewModel.isEdit ? View.VISIBLE : View.INVISIBLE}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_baseline_camera"
@@ -71,6 +72,7 @@
                         android:contentDescription="@string/take_photo" />
                     <ImageButton
                         android:id="@+id/btnDeletePhoto"
+                        android:visibility="@{viewModel.isEdit ? View.VISIBLE : View.INVISIBLE}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_baseline_delete_24"
