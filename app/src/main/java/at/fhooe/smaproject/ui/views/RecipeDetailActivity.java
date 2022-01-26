@@ -3,6 +3,7 @@ package at.fhooe.smaproject.ui.views;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,11 +25,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageClickListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +52,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private static final String RECIPE_ID_KEY = "RecipeId";
     static final int REQUEST_THUMBNAIL_CAPTURE = 1;
     static final int REQUEST_DESCRIPTION_IMAGE_CAPTURE=2;
+    private static final String TAG = RecipeDetailActivity.class.toString();
     private RecipeRepository repo;
     private ActivityRecipeDetailBinding binding;
     private RecipeViewModel viewModel;
@@ -215,6 +220,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void updateDescriptionImages() {
         ArrayList<String> imagePaths = viewModel.getRecipe().getDescriptionImagePaths();
+        carousel.setImageClickListener(pos -> {
+            this.startActivity(FullScreenImageActivity.createIntent(this, imagePaths.get(pos)));
+        });
         carousel.setImageListener((pos, view) -> {
             view.setScaleType(ImageView.ScaleType.FIT_CENTER);
             Bitmap bitmap = readBitmapFromFile(imagePaths.get(pos));

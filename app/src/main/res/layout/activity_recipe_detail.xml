@@ -47,6 +47,7 @@
                         android:id="@+id/imvThumbnail"
                         android:layout_width="wrap_content"
                         android:layout_height="120dp"
+                        android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
                         android:src="@drawable/ic_baseline_image_128"
                         android:contentDescription="@string/thumbnail"
