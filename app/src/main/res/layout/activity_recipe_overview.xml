@@ -12,76 +12,93 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/gradient_backdrop_background"
-        android:padding="@dimen/distance_medium">
+        android:padding="@dimen/distance_medium" android:weightSum="2">
 
-        <include layout="@layout/seperator" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sortOrder"
-            android:textColor="@color/primary_light"/>
-
-        <HorizontalScrollView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cgOrderBy"
-                android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:singleLine="true"
-                app:singleSelection="true">
+                android:orientation="vertical">
 
-                <com.google.android.material.chip.Chip
+                <include layout="@layout/seperator" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sortOrder"
+                    android:textColor="@color/primary_light" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/cgOrderBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleLine="true"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating"
+                            app:chipIcon="@drawable/ic_baseline_arrow_drop_down"
+                            app:chipIconVisible="true" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating"
+                            app:chipIcon="@drawable/ic_baseline_arrow_drop_up"
+                            app:chipIconVisible="true" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title"
+                            app:chipIcon="@drawable/ic_baseline_arrow_downward"
+                            app:chipIconVisible="true" />
+
+                        <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title"
+                            app:chipIcon="@drawable/ic_baseline_arrow_upward"
+                            app:chipIconVisible="true" />
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+
+
+                <include layout="@layout/seperator" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:chipIcon="@drawable/ic_baseline_arrow_drop_down"
-                    app:chipIconVisible="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="@string/rating"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipIcon="@drawable/ic_baseline_arrow_drop_up"
-                    app:chipIconVisible="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="@string/rating"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipIcon="@drawable/ic_baseline_arrow_downward"
-                    app:chipIconVisible="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="@string/title"/>
-                <com.google.android.material.chip.Chip
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipIcon="@drawable/ic_baseline_arrow_upward"
-                    app:chipIconVisible="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    android:text="@string/title"/>
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
+                    android:text="@string/categories"
+                    android:textColor="@color/primary_light" />
 
-        <include layout="@layout/seperator" />
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cgCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></com.google.android.material.chip.ChipGroup>
+                <include layout="@layout/seperator" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/categories"
-            android:textColor="@color/primary_light"/>
-
-        <HorizontalScrollView
+            </LinearLayout>
+        </ScrollView>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cgCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <include layout="@layout/seperator" />
 
     </LinearLayout>
 
@@ -98,40 +115,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:clickable="true"
             android:background="@drawable/ic_rounded_header"
-            android:padding="@dimen/distance_medium"
-            android:focusable="true">
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/distance_medium">
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edtSearch"
-                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/distance_medium"
-                app:startIconDrawable="@drawable/ic_baseline_search"
-                app:startIconContentDescription="@string/search_recipes"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                app:endIconMode="clear_text"
+                android:layout_weight="1"
                 android:hint="@string/search_recipes"
                 android:importantForAutofill="no"
-                android:inputType="textFilter">
+                android:inputType="textFilter"
+                android:paddingEnd="@dimen/distance_medium"
+                app:endIconMode="clear_text"
+                app:startIconContentDescription="@string/search_recipes"
+                app:startIconDrawable="@drawable/ic_baseline_search">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtSearchEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/primary_light"
-                    />
+                    android:backgroundTint="@color/primary_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:id="@+id/filterIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_baseline_filter_list"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end"
+                android:src="@drawable/ic_baseline_filter_list" />
 
         </LinearLayout>
 
@@ -141,6 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/gradient_background">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvRecipes"
                 android:layout_width="match_parent"
@@ -156,8 +174,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_baseline_add"
         android:layout_margin="16dp"
-        android:contentDescription="@string/add" />
+        android:contentDescription="@string/add"
+        android:src="@drawable/ic_baseline_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

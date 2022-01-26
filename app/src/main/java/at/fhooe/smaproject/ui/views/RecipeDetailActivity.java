@@ -125,7 +125,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
         });
 
-        // TODO: @gregor
         ImageButton addDescriptionImageBtn = findViewById(R.id.btnTakePhoto);
         addDescriptionImageBtn.setOnClickListener(v -> {
             captureAndSaveImage();
@@ -143,6 +142,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             deleteFileByPath(path);
             updateDescriptionImages();
         });
+
+        updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
     }
 
     private void initUIFields() {
