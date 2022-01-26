@@ -133,7 +133,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         dao.delete(1, 2);
         if(dao.findByCategoryId(2).size() == 0) Log.d("dbtest", "juhuuui");*/
 
-        Recipe recipe = repo.findRecipeById(1);
+        /*Recipe recipe = repo.findRecipeById(1);
         System.out.println();
         Recipe newRecipe = new Recipe(
                 -1, "xTitle", null, "xDescription", "xComment",
@@ -155,7 +155,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         System.out.println();
         repo.deleteRecipe(newRecipe.getId());
         coll = repo.findAllRecipes();
-        System.out.println();
+        System.out.println();*/
 
         updateCanteens();
     }

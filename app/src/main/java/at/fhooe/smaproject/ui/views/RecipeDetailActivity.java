@@ -81,8 +81,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         viewModel = new RecipeViewModel(new Recipe());
         binding.setViewModel(viewModel);
 
-        if(recipeId != -1) fetchRecipeById(recipeId);
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Details");
@@ -143,7 +141,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
             updateDescriptionImages();
         });
 
-        updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
+
+        if(recipeId != -1) {
+            fetchRecipeById(recipeId);
+        } else {
+            updateCategoryChipGroup(viewModel.getIsEdit(), viewModel.getRecipe());
+        }
     }
 
     private void initUIFields() {
@@ -239,14 +242,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Bitmap readBitmapFromFile(String filePath) {
         Bitmap bitmap = null;
         try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
-                    FileProvider.getUriForFile(this,
-                            "com.example.android.fileprovider",
-                            new File(filePath))
-            );
+            Uri uri = FileProvider.getUriForFile(this,
+                    "com.example.android.fileprovider",
+                    new File(filePath));
 
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            Log.e("descriptionImage", "invalid path to descriptionImage");
         }
 
         return bitmap;
