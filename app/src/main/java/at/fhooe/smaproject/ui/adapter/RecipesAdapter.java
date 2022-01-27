@@ -62,13 +62,20 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
 
         void updateView(final Recipe recipe) {
             imvThumbnail.setImageBitmap(recipe.getTitleImage());
-            tcvTitle.setText(recipe.getTitle());
+            tcvTitle.setText(shortenString(recipe.getTitle()));
             rtbAverageRating.setRating(recipe.getRating());
             Collection<Category> categories = recipe.getCategories();
             StringJoiner joiner = new StringJoiner(", ");
             categories.forEach(c -> joiner.add(c.getName()));
-            tcvCategories.setText(joiner.toString());
+            tcvCategories.setText(shortenString(joiner.toString()));
             itemView.setOnClickListener(v -> v.getContext().startActivity(RecipeDetailActivity.createIntent(v.getContext(), recipe.getId())));
         }
+    }
+
+    private static String shortenString(String input) {
+        if (input.length() > 22) {
+            input = input.substring(0, 20) + "...";
+        }
+        return input;
     }
 }
